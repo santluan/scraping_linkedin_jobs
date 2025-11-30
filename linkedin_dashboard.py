@@ -8,6 +8,7 @@ import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 
+st.set_page_config(page_title="Dashboard Scraping Linkedin")
 st.set_page_config(layout="wide")
 
 st.title('📊 Dashboard para Análise de Vagas do Linkedin')
@@ -107,6 +108,7 @@ if keyword and location:
     
 
     
+
 
 
 
