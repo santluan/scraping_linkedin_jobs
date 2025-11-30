@@ -8,7 +8,9 @@ import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
 locator = Nominatim(user_agent="my_streamlit_app_geocoder")
+geocode = RateLimiter(locator.geocode, min_delay_seconds=1)
 
 st.set_page_config(
     page_title="Dashboard Scraping Linkedin",
@@ -33,7 +35,7 @@ def scrape_linkedin_cached(k, l):
 def locate_cities(df):
     cities = df.groupby('Location').size().reset_index()
     cities.columns = ['location', 'jobs_posted']
-    cities['locator'] = cities['location'].apply(locator.geocode)
+    cities['locator'] = cities['location'].apply(geocode)
     cities['latitude'] = cities['locator'].apply(lambda loc: loc.latitude if loc else None)
     cities['longitude'] = cities['locator'].apply(lambda loc: loc.longitude if loc else None)
     return cities
@@ -55,15 +57,13 @@ with st.sidebar:
 #### ---- LÓGICA PRINCIPAL ----
 
 col1, col2 = st.columns(2)
-col3, col4 = st.columns(2)
+# col3, col4 = st.columns(2)
 
 if keyword and location:
 
     df = scrape_linkedin_cached(keyword, location)
     df['Date_Posted'] = pd.to_datetime(df['Date_Posted'], format="%Y-%m-%d")
     df = df.sort_values(by='Date_Posted')
-
-    cities = locate_cities(df)
 
     with col1:
         st.write('### Distribuição de vagas por Nível')
@@ -119,6 +119,8 @@ if keyword and location:
 
     st.write('### Locais das vagas')
 
+    cities = locate_cities(df)
+    
     fig = px.scatter_map(
         data_frame=cities,
         lat='latitude',
@@ -135,6 +137,7 @@ if keyword and location:
     st.plotly_chart(fig)
 
     
+
 
 
 
