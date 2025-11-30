@@ -8,7 +8,7 @@ import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 from geopy.geocoders import Nominatim
-locator = Nominatim(user_agent="myGeocoder")
+locator = Nominatim(user_agent="my_streamlit_app_geocoder")
 
 st.set_page_config(
     page_title="Dashboard Scraping Linkedin",
@@ -135,6 +135,7 @@ if keyword and location:
     st.plotly_chart(fig)
 
     
+
 
 
 
