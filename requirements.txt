@@ -4,3 +4,9 @@ matplotlib
 plotly
 wordcloud
 nltk
+bs4
+requests
+time
+random
+unidecode
+re
