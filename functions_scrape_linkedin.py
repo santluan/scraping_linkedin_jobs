@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup
+from beautifulsoup4 import BeautifulSoup
 import pandas as pd
 import time
 import random
@@ -116,3 +116,4 @@ def scrape_linkedin_jobs(keyword, location, start_page, end_page):
             return print(f"Error: {e}")
     
     return pd.DataFrame(job_list)  
+
