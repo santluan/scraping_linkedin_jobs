@@ -39,10 +39,10 @@ def categorize(nivel):
     especialista = ['especialista', 'specialist']
 
     # tratamento de dados
-    nivel.lower()
-    nivel.replace('iii','sr')
-    nivel.replace('ii','pl')
-    unidecode(string=nivel)
+    nivel = nivel.lower()
+    nivel = nivel.replace('iii','sr')
+    nivel = nivel.replace('ii','pl')
+    nivel = unidecode(string=nivel)
 
     # Atribuindo o nível a vaga
     if any(re.search(pattern, nivel, re.IGNORECASE) for pattern in estagio):
@@ -116,5 +116,6 @@ def scrape_linkedin_jobs(keyword, location, start_page, end_page):
             return print(f"Error: {e}")
     
     return pd.DataFrame(job_list)  
+
 
 
