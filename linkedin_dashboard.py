@@ -3,8 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 from wordcloud import WordCloud
-from nltk.corpus import stopwords
 from functions_scrape_linkedin import scrape_linkedin_jobs
+nltk.download('stopwords')
+from nltk.corpus import stopwords
 
 st.set_page_config(layout="wide")
 
@@ -103,5 +104,6 @@ if keyword and location:
     
 
     
+
 
 
