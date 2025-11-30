@@ -4,7 +4,7 @@ matplotlib
 plotly
 wordcloud
 nltk
-BeautifulSoup
+beautifulsoup4==4.14.2
 requests
 unidecode
 re
