@@ -63,6 +63,8 @@ if keyword and location:
     df['Date_Posted'] = pd.to_datetime(df['Date_Posted'], format="%Y-%m-%d")
     df = df.sort_values(by='Date_Posted')
 
+    cities = locate_cities(df)
+
     with col1:
         st.write('### Distribuição de vagas por Nível')
 
@@ -116,8 +118,6 @@ if keyword and location:
     st.dataframe(df[df['Level']==nivel_2], key='my_df')
 
     st.write('### Locais das vagas')
-    
-    cities = locate_cities(df)
 
     fig = px.scatter_map(
         data_frame=cities,
@@ -129,12 +129,13 @@ if keyword and location:
         height=300
     )
 
-    fig.update_layout(mapbox_style="open-street-map")
+    # fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
     st.plotly_chart(fig)
 
     
+
 
 
 
