@@ -1,2 +1,2 @@
-# dash_linkedin_jobs
-Project to scrape and analyse Linkedin Jobs
+# Scrapping Linkedin Jobs
+Project to scrape and analyse Linkedin Jobs using Streamlit library
