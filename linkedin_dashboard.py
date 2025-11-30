@@ -7,6 +7,8 @@ from functions_scrape_linkedin import scrape_linkedin_jobs
 import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
+from geopy.geocoders import Nominatim
+locator = Nominatim(user_agent="myGeocoder")
 
 st.set_page_config(
     page_title="Dashboard Scraping Linkedin",
@@ -26,6 +28,15 @@ def clear_text():
 def scrape_linkedin_cached(k, l):
     # Deixei 5 páginas por padrão
     return scrape_linkedin_jobs(k, l, start_page=1, end_page=5)
+
+@st.cache_data
+def locate_cities(df):
+    cities = df.groupby('Location').size().reset_index()
+    cities.columns = ['location', 'jobs_posted']
+    cities['locator'] = cities['location'].apply(locator.geocode)
+    cities['latitude'] = cities['locator'].apply(lambda loc: loc.latitude if loc else None)
+    cities['longitude'] = cities['locator'].apply(lambda loc: loc.longitude if loc else None)
+    return cities
     
 #### ---- SIDEBAR ----
 
@@ -102,14 +113,29 @@ if keyword and location:
         key='nivel_2'
         )
 
-    df = scrape_linkedin_cached(keyword, location)
-    df['Date_Posted'] = pd.to_datetime(df['Date_Posted'], format="%Y-%m-%d")
-    df = df.sort_values(by='Date_Posted')
     st.dataframe(df[df['Level']==nivel_2], key='my_df')
 
+    st.write('### Locais das vagas')
     
+    cities = locate_cities(df)
+
+    fig = px.scatter_map(
+        data_frame=cities,
+        lat='latitude',
+        lon='longitude',
+        size='jobs_posted',
+        hover_name='location',
+        zoom=3, 
+        height=300
+    )
+
+    fig.update_layout(mapbox_style="open-street-map")
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+    st.plotly_chart(fig)
 
     
+
 
 
 
