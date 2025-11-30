@@ -66,7 +66,8 @@ if keyword and location:
 
             nivel_1 = col2_1.selectbox(
                 "Selecionar nível:",
-                ['Estágio', 'Junior', 'Pleno', 'Senior', 'Especialista', 'Outros'],
+                df['Level'].unique(),
+                # ['Estágio', 'Junior', 'Pleno', 'Senior', 'Especialista', 'Outros'],
                 key='nivel_1'
                 )
 
@@ -93,7 +94,8 @@ if keyword and location:
 
     nivel_2 = st.selectbox(
         "Selecionar nível:",
-        ['Estágio', 'Junior', 'Pleno', 'Senior', 'Especialista', 'Outros'],
+        df['Level'].unique(),
+        # ['Estágio', 'Junior', 'Pleno', 'Senior', 'Especialista', 'Outros'],
         key='nivel_2'
         )
 
@@ -105,6 +107,7 @@ if keyword and location:
     
 
     
+
 
 
 
